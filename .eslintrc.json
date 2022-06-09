@@ -30,6 +30,8 @@
     "react/jsx-props-no-spreading": "off",
     "linebreak-style": "off",
     "no-use-before-define": "off",
+    "no-console": "off",
+    "consistent-return": "off",
     "react/function-component-definition": [
       2,
       {
