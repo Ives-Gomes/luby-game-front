@@ -1,12 +1,13 @@
 import React, {
   createContext, useCallback, useContext, useState,
 } from 'react';
+
 import {
   metamaskInstalled,
   connectWallet,
   getPlayerBalance,
   getGameBalance,
-} from '../shared/helpers/index';
+} from '@helpers/index';
 
 interface GameInfosContextProps {
   walletConnected: boolean;

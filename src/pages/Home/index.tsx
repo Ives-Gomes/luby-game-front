@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { Header } from '../../components/index';
+import { Header } from '@components/index';
 
-import { useGameInfos } from '../../hooks/gameInfos';
+import { useGameInfos } from '@hooks/gameInfos';
 
 import { WarningContainer } from './styles';
 

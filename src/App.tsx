@@ -1,8 +1,8 @@
 import React from 'react';
 
-import AppProvider from './hooks';
+import AppProvider from '@hooks/index';
 
-import { Home } from './pages/index';
+import { Home } from '@pages/index';
 
 const App: React.FC = () => (
   <AppProvider>

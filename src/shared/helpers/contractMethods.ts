@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 
-import contractLubyGame from '../../contracts/LubyGame.json';
+import contractLubyGame from '@contracts/LubyGame.json';
 
 const contractAddress = '0x0007dDeF5dF376B90940a0F660534fdA5E8e4dFb';
 const { abi } = contractLubyGame;

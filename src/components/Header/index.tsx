@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useGameInfos } from '../../hooks/gameInfos';
+import { useGameInfos } from '@hooks/gameInfos';
 
 import {
   Account,
