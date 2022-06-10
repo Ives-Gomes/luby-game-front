@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+import { toast } from 'react-toastify';
 
 import contractLubyGame from '@contracts/LubyGame.json';
 
@@ -35,6 +36,8 @@ export const connectWallet = async () => {
     return accounts[0];
   } catch (err) {
     console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
   }
 };
 
@@ -47,6 +50,8 @@ export const getPlayerBalance = async () => {
     return playerBalance;
   } catch (err) {
     console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
   }
 };
 
@@ -59,6 +64,8 @@ export const getGameBalance = async () => {
     return gameBalance;
   } catch (err) {
     console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
   }
 };
 
@@ -68,12 +75,18 @@ export const mintLBC = async (currentAccount: string) => {
     const contract = getContract();
 
     const result = await contract.methods
-      .mintLbc(web3.utils.toWei('5', 'ether'))
+      .mintLbc(web3.utils.toWei('10', 'ether'))
       .send({ from: currentAccount });
 
-    console.log(result);
+    if (result.transactionHash) {
+      toast.success('Minted 10LBC!');
+    }
+
+    return result;
   } catch (err) {
     console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
   }
 };
 
@@ -82,12 +95,22 @@ export const startGame = async (currentAccount: string) => {
     const web3 = getWeb3();
     const contract = getContract();
 
-    const result = await contract.methods
-      .startGame(web3.utils.toWei('1', 'ether'))
+    await contract.methods
+      .approve(web3.utils.toWei('5', 'ether'))
       .send({ from: currentAccount });
 
-    console.log(result);
+    const result = await contract.methods
+      .startGame(web3.utils.toWei('5', 'ether'))
+      .send({ from: currentAccount });
+
+    if (result && result.transactionHash) {
+      toast.success('Game Started!');
+    }
+
+    return result;
   } catch (err) {
     console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
   }
 };

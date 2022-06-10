@@ -49,4 +49,5 @@ export const PlayerBalance = styled.div`
   border-radius: 5px;
 
   background-color: #fff;
+  color: #00e;
 `;

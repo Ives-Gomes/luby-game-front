@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 
+import { Button } from '@components/index';
+
 import { useGameInfos } from '@hooks/gameInfos';
+import { useGameActions } from '@hooks/gameActions';
 
 import {
   Account,
@@ -20,15 +23,25 @@ const Header: React.FC = () => {
     gameBalance,
   } = useGameInfos();
 
+  const { startedGame } = useGameActions();
+
   useEffect(() => {
     getPlayerBalanceHandler();
     getGameBalanceHandler();
-  }, [playerBalance]);
+  }, [startedGame]);
 
   return (
     <Container>
       <Content>
-        <button type="button" onClick={getCurrentAccount}>Connect Account</button>
+        <Button
+          type="button"
+          onClick={getCurrentAccount}
+          background="#fff"
+          borderColor="#fff"
+          color="blue"
+        >
+          Connect Account
+        </Button>
 
         {currentAccount.length === 0 ? (
           <Account>Connect your account in Metamask.</Account>
@@ -38,11 +51,15 @@ const Header: React.FC = () => {
       </Content>
 
       <Content>
-        <PlayerBalance>
-          <p>{`Your points: ${playerBalance}`}</p>
-        </PlayerBalance>
+        {currentAccount.length !== 0 && (
+          <>
+            <PlayerBalance>
+              <p>{`Your points: ${playerBalance}`}</p>
+            </PlayerBalance>
 
-        <GameBalance>{`Game balance: ${gameBalance}`}</GameBalance>
+            <GameBalance>{`Game balance: ${gameBalance}`}</GameBalance>
+          </>
+        )}
       </Content>
     </Container>
   );

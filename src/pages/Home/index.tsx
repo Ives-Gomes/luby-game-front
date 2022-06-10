@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Header } from '@components/index';
+import { Header, GameActions } from '@components/index';
 
 import { useGameInfos } from '@hooks/gameInfos';
 
@@ -22,7 +22,10 @@ const Home: React.FC = () => {
         <p>Please install the  Metamask to continue.</p>
       </WarningContainer>
     ) : (
-      <Header />
+      <>
+        <Header />
+        <GameActions />
+      </>
     )
   );
 };

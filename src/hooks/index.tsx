@@ -1,10 +1,13 @@
 import React from 'react';
 
 import { GameInfosProvider } from './gameInfos';
+import { GameActionsProvider } from './gameActions';
 
 const AppProvider: React.FC = ({ children }: any) => (
   <GameInfosProvider>
-    {children}
+    <GameActionsProvider>
+      {children}
+    </GameActionsProvider>
   </GameInfosProvider>
 );
 
