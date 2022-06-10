@@ -41,27 +41,15 @@ export const connectWallet = async () => {
   }
 };
 
-export const getPlayerBalance = async () => {
+export const getPlayerBalance = async (currentAccount: string) => {
   try {
     const contract = getContract();
 
-    const playerBalance = await contract.methods.getBalanceIndividual().call();
+    const playerBalance = await contract.methods
+      .getBalanceIndividual()
+      .call({ from: currentAccount });
 
     return playerBalance;
-  } catch (err) {
-    console.log(err);
-
-    toast.warn('Something went wrong. Try again later.');
-  }
-};
-
-export const getGameBalance = async () => {
-  try {
-    const contract = getContract();
-
-    const gameBalance = await contract.methods.balanceOf(contractAddress).call();
-
-    return gameBalance;
   } catch (err) {
     console.log(err);
 
@@ -73,6 +61,10 @@ export const mintLBC = async (currentAccount: string) => {
   try {
     const web3 = getWeb3();
     const contract = getContract();
+
+    await contract.methods
+      .approve(web3.utils.toWei('10', 'ether'))
+      .send({ from: currentAccount });
 
     const result = await contract.methods
       .mintLbc(web3.utils.toWei('10', 'ether'))
@@ -105,6 +97,87 @@ export const startGame = async (currentAccount: string) => {
 
     if (result && result.transactionHash) {
       toast.success('Game Started!');
+    }
+
+    return result;
+  } catch (err) {
+    console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
+  }
+};
+
+export const correctAnswer = async (currentAccount: string) => {
+  try {
+    const web3 = getWeb3();
+    const contract = getContract();
+
+    await contract.methods
+      .approve(web3.utils.toWei('5', 'ether'))
+      .send({ from: currentAccount });
+
+    const result = await contract.methods
+      .correctAnswer(web3.utils.toWei('5', 'ether'))
+      .send({ from: currentAccount });
+
+    if (result && result.transactionHash) {
+      toast.success('Correct! You win 5 LBC!');
+    }
+
+    return result;
+  } catch (err) {
+    console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
+  }
+};
+
+export const incorrectAnswer = async (currentAccount: string) => {
+  try {
+    const web3 = getWeb3();
+    const contract = getContract();
+
+    await contract.methods
+      .approve(web3.utils.toWei('5', 'ether'))
+      .send({ from: currentAccount });
+
+    const result = await contract.methods
+      .incorrectAnswer(web3.utils.toWei('5', 'ether'))
+      .send({ from: currentAccount });
+
+    if (result && result.transactionHash) {
+      toast.error('Wrong! You lose 5 LBC.');
+    }
+
+    return result;
+  } catch (err) {
+    console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
+  }
+};
+
+export const claimBalance = async (currentAccount: string, amount: string) => {
+  try {
+    const web3 = getWeb3();
+    const contract = getContract();
+
+    if (Number(amount) === 0) {
+      toast.warn('You have no balance!');
+
+      return;
+    }
+
+    await contract.methods
+      .approve(web3.utils.toWei('1', 'ether'))
+      .send({ from: currentAccount });
+
+    const result = await contract.methods
+      .claimBalance(web3.utils.toWei('1', 'ether'))
+      .send({ from: currentAccount });
+
+    if (result && result.transactionHash) {
+      toast.success('Claimed! Check your wallet.');
     }
 
     return result;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {
   createContext, useCallback, useContext, useState,
 } from 'react';
@@ -6,18 +7,15 @@ import {
   metamaskInstalled,
   connectWallet,
   getPlayerBalance,
-  getGameBalance,
 } from '@helpers/index';
 
 interface GameInfosContextProps {
   walletConnected: boolean;
   currentAccount: string;
   playerBalance: number;
-  gameBalance: number;
   walletIsInstalled: () => Promise<void>;
   getCurrentAccount: () => Promise<void>;
-  getPlayerBalanceHandler: () => Promise<void>;
-  getGameBalanceHandler: () => Promise<void>;
+  getPlayerBalanceHandler: (currAccount: string) => Promise<void>;
 }
 
 const GameInfosContext = createContext<GameInfosContextProps>({} as GameInfosContextProps);
@@ -26,7 +24,6 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
   const [walletConnected, setWalletConnected] = useState(false);
   const [currentAccount, setCurrentAccount] = useState('');
   const [playerBalance, setPlayerBalance] = useState(0);
-  const [gameBalance, setGameBalance] = useState(0);
 
   const walletIsInstalled = useCallback(async () => {
     const isInstalled = metamaskInstalled();
@@ -42,16 +39,10 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
     setCurrentAccount(account);
   }, [connectWallet]);
 
-  const getPlayerBalanceHandler = useCallback(async () => {
-    const balance = await getPlayerBalance() as any;
+  const getPlayerBalanceHandler = useCallback(async (currAccount: string) => {
+    const balance = await getPlayerBalance(currAccount) as any;
 
-    setPlayerBalance(balance);
-  }, [getPlayerBalance]);
-
-  const getGameBalanceHandler = useCallback(async () => {
-    const balance = await getGameBalance() as any;
-
-    setGameBalance(balance / 10 ** 18);
+    setPlayerBalance(balance / 10 ** 18);
   }, [getPlayerBalance]);
 
   return (
@@ -61,11 +52,9 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
         walletConnected,
         currentAccount,
         playerBalance,
-        gameBalance,
         walletIsInstalled,
         getCurrentAccount,
         getPlayerBalanceHandler,
-        getGameBalanceHandler,
       }}
     >
       {children}

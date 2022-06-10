@@ -7,7 +7,6 @@ import { useGameActions } from '@hooks/gameActions';
 
 import {
   Account,
-  GameBalance,
   Container,
   Content,
   PlayerBalance,
@@ -18,17 +17,14 @@ const Header: React.FC = () => {
     getCurrentAccount,
     currentAccount,
     getPlayerBalanceHandler,
-    getGameBalanceHandler,
     playerBalance,
-    gameBalance,
   } = useGameInfos();
 
-  const { startedGame } = useGameActions();
+  const { startedGame, getBalance } = useGameActions();
 
   useEffect(() => {
-    getPlayerBalanceHandler();
-    getGameBalanceHandler();
-  }, [startedGame]);
+    getPlayerBalanceHandler(currentAccount);
+  }, [startedGame, currentAccount, getBalance]);
 
   return (
     <Container>
@@ -52,13 +48,9 @@ const Header: React.FC = () => {
 
       <Content>
         {currentAccount.length !== 0 && (
-          <>
-            <PlayerBalance>
-              <p>{`Your points: ${playerBalance}`}</p>
-            </PlayerBalance>
-
-            <GameBalance>{`Game balance: ${gameBalance}`}</GameBalance>
-          </>
+          <PlayerBalance>
+            <p>{`Your balance: ${playerBalance}`}</p>
+          </PlayerBalance>
         )}
       </Content>
     </Container>

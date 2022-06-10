@@ -14,6 +14,7 @@ const App: React.FC = () => (
       autoClose={3000}
       hideProgressBar
       newestOnTop
+      style={{ marginTop: 35 }}
     />
 
     <Home />

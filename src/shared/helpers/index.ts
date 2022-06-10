@@ -2,20 +2,24 @@ import {
   metamaskInstalled,
   connectWallet,
   getContract,
-  getGameBalance,
   getPlayerBalance,
   getWeb3,
   mintLBC,
   startGame,
+  correctAnswer,
+  incorrectAnswer,
+  claimBalance,
 } from './contractMethods';
 
 export {
   metamaskInstalled,
   connectWallet,
   getContract,
-  getGameBalance,
   getPlayerBalance,
   getWeb3,
   mintLBC,
   startGame,
+  correctAnswer,
+  incorrectAnswer,
+  claimBalance,
 };

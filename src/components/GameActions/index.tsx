@@ -11,9 +11,10 @@ const GameActions: React.FC = () => {
   const {
     mintLBCHandler,
     startGameHandler,
+    claimBalanceHandler,
   } = useGameActions();
 
-  const { currentAccount } = useGameInfos();
+  const { currentAccount, playerBalance } = useGameInfos();
 
   return (
     <Container>
@@ -27,6 +28,17 @@ const GameActions: React.FC = () => {
             color="blue"
           >
             Mint LBC
+          </Button>
+
+          <Button
+            type="button"
+            onClick={() => claimBalanceHandler(currentAccount, playerBalance.toString())}
+            background="#fff"
+            borderColor="#00e"
+            color="blue"
+            style={{ marginLeft: 40 }}
+          >
+            Claim Balance
           </Button>
 
           <Button

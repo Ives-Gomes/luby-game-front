@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Header, GameActions } from '@components/index';
+import { Header, GameActions, Questions } from '@components/index';
 
 import { useGameInfos } from '@hooks/gameInfos';
 
@@ -25,6 +25,7 @@ const Home: React.FC = () => {
       <>
         <Header />
         <GameActions />
+        <Questions />
       </>
     )
   );

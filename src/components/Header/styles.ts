@@ -36,7 +36,7 @@ export const GameBalance = styled.p`
 `;
 
 export const PlayerBalance = styled.div`
-  width: 120px;
+  width: 150px;
   height: 35px;
 
   display: flex;
