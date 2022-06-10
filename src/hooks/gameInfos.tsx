@@ -23,7 +23,7 @@ const GameInfosContext = createContext<GameInfosContextProps>({} as GameInfosCon
 
 const GameInfosProvider: React.FC = ({ children }: any) => {
   const [walletConnected, setWalletConnected] = useState(false);
-  const [currentAccount, setCurrentAccount] = useState('teste');
+  const [currentAccount, setCurrentAccount] = useState('');
   const [playerBalance, setPlayerBalance] = useState(0);
   const [gameBalance, setGameBalance] = useState(0);
 
@@ -42,13 +42,13 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
   }, [connectWallet]);
 
   const getPlayerBalanceHandler = useCallback(async () => {
-    const balance = getPlayerBalance() as any;
+    const balance = await getPlayerBalance() as any;
 
     setPlayerBalance(balance);
   }, [getPlayerBalance]);
 
   const getGameBalanceHandler = useCallback(async () => {
-    const balance = getGameBalance() as any;
+    const balance = await getGameBalance() as any;
 
     setGameBalance(balance / 10 ** 18);
   }, [getPlayerBalance]);

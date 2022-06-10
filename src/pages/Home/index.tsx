@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 
+import { Header } from '../../components/index';
+
 import { useGameInfos } from '../../hooks/gameInfos';
+
+import { WarningContainer } from './styles';
 
 const Home: React.FC = () => {
   const {
     walletConnected,
     walletIsInstalled,
-    getCurrentAccount,
-    currentAccount,
   } = useGameInfos();
 
   useEffect(() => {
@@ -15,17 +17,13 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      {!walletConnected ? (
-        <p>Please install the  Metamask.</p>
-      ) : (
-        <div>
-          <button type="button" onClick={getCurrentAccount}>Connect Account</button>
-
-          <p>{currentAccount}</p>
-        </div>
-      )}
-    </div>
+    !walletConnected ? (
+      <WarningContainer>
+        <p>Please install the  Metamask to continue.</p>
+      </WarningContainer>
+    ) : (
+      <Header />
+    )
   );
 };
 

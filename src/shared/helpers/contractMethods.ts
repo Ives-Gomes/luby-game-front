@@ -29,7 +29,7 @@ export const connectWallet = async () => {
     const accounts = await web3.eth.getAccounts();
 
     if (accounts.length === 0) {
-      return 'No authorized accound found.';
+      return 'No authorized accound found. Please check your Metamask.';
     }
 
     return accounts[0];
