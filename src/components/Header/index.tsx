@@ -18,7 +18,13 @@ const Header: React.FC = () => {
     currentAccount,
     getPlayerBalanceHandler,
     playerBalance,
+    getIsOwner,
+    isOwner,
   } = useGameInfos();
+
+  useEffect(() => {
+    getIsOwner(currentAccount);
+  }, [currentAccount]);
 
   const { startedGame, getBalance } = useGameActions();
 
@@ -51,6 +57,10 @@ const Header: React.FC = () => {
           <PlayerBalance>
             <p>{`Your balance: ${playerBalance}`}</p>
           </PlayerBalance>
+        )}
+
+        {isOwner && (
+          <p>IS OWNER</p>
         )}
       </Content>
     </Container>

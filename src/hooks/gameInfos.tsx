@@ -7,15 +7,18 @@ import {
   metamaskInstalled,
   connectWallet,
   getPlayerBalance,
+  getOwner,
 } from '@helpers/index';
 
 interface GameInfosContextProps {
   walletConnected: boolean;
   currentAccount: string;
   playerBalance: number;
+  isOwner: boolean;
   walletIsInstalled: () => Promise<void>;
   getCurrentAccount: () => Promise<void>;
   getPlayerBalanceHandler: (currAccount: string) => Promise<void>;
+  getIsOwner: (currAccount: string) => Promise<void>;
 }
 
 const GameInfosContext = createContext<GameInfosContextProps>({} as GameInfosContextProps);
@@ -24,6 +27,7 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
   const [walletConnected, setWalletConnected] = useState(false);
   const [currentAccount, setCurrentAccount] = useState('');
   const [playerBalance, setPlayerBalance] = useState(0);
+  const [isOwner, setIsOwner] = useState(false);
 
   const walletIsInstalled = useCallback(async () => {
     const isInstalled = metamaskInstalled();
@@ -45,6 +49,18 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
     setPlayerBalance(balance / 10 ** 18);
   }, [getPlayerBalance]);
 
+  const getIsOwner = useCallback(async (currAccount: string) => {
+    const owner = await getOwner(currAccount) as any;
+
+    if (owner === currAccount) {
+      setIsOwner(true);
+
+      return;
+    }
+
+    setIsOwner(false);
+  }, [getOwner]);
+
   return (
     <GameInfosContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
@@ -55,6 +71,8 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
         walletIsInstalled,
         getCurrentAccount,
         getPlayerBalanceHandler,
+        getIsOwner,
+        isOwner,
       }}
     >
       {children}

@@ -15,6 +15,22 @@ export const getContract = () => {
   return new web3.eth.Contract(abi as any, contractAddress);
 };
 
+export const getOwner = async (currentAccount: string) => {
+  try {
+    const contract = getContract();
+
+    const owner = await contract.methods
+      .owner()
+      .call({ from: currentAccount });
+
+    return owner;
+  } catch (err) {
+    console.log(err);
+
+    toast.warn('Something went wrong. Try again later.');
+  }
+};
+
 export const metamaskInstalled = () => {
   if (!ethereum) {
     return false;

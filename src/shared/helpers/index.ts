@@ -9,9 +9,12 @@ import {
   correctAnswer,
   incorrectAnswer,
   claimBalance,
+  getOwner,
 } from './contractMethods';
+import questions from './questions';
 
 export {
+  questions,
   metamaskInstalled,
   connectWallet,
   getContract,
@@ -22,4 +25,5 @@ export {
   correctAnswer,
   incorrectAnswer,
   claimBalance,
+  getOwner,
 };

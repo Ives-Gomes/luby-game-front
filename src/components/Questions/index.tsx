@@ -5,7 +5,7 @@ import { Button } from '@components/index';
 import { useGameInfos } from '@hooks/gameInfos';
 import { useGameActions } from '@hooks/gameActions';
 
-import questions from '@shared/helpers/questions';
+import { questions } from '@shared/helpers/index';
 
 import {
   Container,
