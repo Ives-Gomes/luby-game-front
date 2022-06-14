@@ -10,6 +10,9 @@ import {
   incorrectAnswer,
   claimBalance,
   getOwner,
+  getBalance,
+  withdrawBalance,
+  getContractBalance,
 } from './contractMethods';
 import questions from './questions';
 
@@ -26,4 +29,7 @@ export {
   incorrectAnswer,
   claimBalance,
   getOwner,
+  getBalance,
+  withdrawBalance,
+  getContractBalance,
 };

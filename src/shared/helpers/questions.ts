@@ -13,6 +13,10 @@ const questions: Array<Question> = [
         response: true,
       },
       {
+        question: '2006',
+        response: false,
+      },
+      {
         question: '2010',
         response: false,
       },
@@ -30,6 +34,10 @@ const questions: Array<Question> = [
         response: false,
       },
       {
+        question: '230 pessoas',
+        response: false,
+      },
+      {
         question: 'Mais de 250 pessoas',
         response: true,
       },
@@ -44,6 +52,10 @@ const questions: Array<Question> = [
       },
       {
         question: 'Acelera Luby',
+        response: false,
+      },
+      {
+        question: 'RocketLuby',
         response: false,
       },
       {

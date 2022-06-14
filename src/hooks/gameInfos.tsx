@@ -8,6 +8,8 @@ import {
   connectWallet,
   getPlayerBalance,
   getOwner,
+  getBalance,
+  getContractBalance,
 } from '@helpers/index';
 
 interface GameInfosContextProps {
@@ -15,10 +17,14 @@ interface GameInfosContextProps {
   currentAccount: string;
   playerBalance: number;
   isOwner: boolean;
+  gameBalance: number;
+  contractBalance: number;
   walletIsInstalled: () => Promise<void>;
   getCurrentAccount: () => Promise<void>;
   getPlayerBalanceHandler: (currAccount: string) => Promise<void>;
-  getIsOwner: (currAccount: string) => Promise<void>;
+  getIsOwner: (currAccount: string) => Promise<boolean>;
+  getBalanceHandler: (currAccount: string) => Promise<void>;
+  getContractBalanceHandler: (currAccount: string) => Promise<void>;
 }
 
 const GameInfosContext = createContext<GameInfosContextProps>({} as GameInfosContextProps);
@@ -27,6 +33,8 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
   const [walletConnected, setWalletConnected] = useState(false);
   const [currentAccount, setCurrentAccount] = useState('');
   const [playerBalance, setPlayerBalance] = useState(0);
+  const [gameBalance, setGameBalance] = useState(0);
+  const [contractBalance, setContractBalance] = useState(0);
   const [isOwner, setIsOwner] = useState(false);
 
   const walletIsInstalled = useCallback(async () => {
@@ -49,16 +57,29 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
     setPlayerBalance(balance / 10 ** 18);
   }, [getPlayerBalance]);
 
+  const getBalanceHandler = useCallback(async (currAccount: string) => {
+    const balance = await getBalance(currAccount) as any;
+
+    setGameBalance(balance / 10 ** 18);
+  }, [getBalance]);
+
+  const getContractBalanceHandler = useCallback(async (currAccount: string) => {
+    const balance = await getContractBalance(currAccount) as any;
+
+    setContractBalance(balance / 10 ** 18);
+  }, [getContractBalance]);
+
   const getIsOwner = useCallback(async (currAccount: string) => {
     const owner = await getOwner(currAccount) as any;
 
     if (owner === currAccount) {
       setIsOwner(true);
 
-      return;
+      return true;
     }
 
     setIsOwner(false);
+    return false;
   }, [getOwner]);
 
   return (
@@ -73,6 +94,10 @@ const GameInfosProvider: React.FC = ({ children }: any) => {
         getPlayerBalanceHandler,
         getIsOwner,
         isOwner,
+        gameBalance,
+        getBalanceHandler,
+        getContractBalanceHandler,
+        contractBalance,
       }}
     >
       {children}

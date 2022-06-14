@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Button } from '@components/index';
 
@@ -12,9 +12,14 @@ const GameActions: React.FC = () => {
     mintLBCHandler,
     startGameHandler,
     claimBalanceHandler,
+    claimOwnerBalanceHandler,
   } = useGameActions();
 
-  const { currentAccount, playerBalance } = useGameInfos();
+  const { currentAccount, isOwner, getIsOwner } = useGameInfos();
+
+  useEffect(() => {
+    getIsOwner(currentAccount);
+  }, [currentAccount]);
 
   return (
     <Container>
@@ -32,7 +37,7 @@ const GameActions: React.FC = () => {
 
           <Button
             type="button"
-            onClick={() => claimBalanceHandler(currentAccount, playerBalance.toString())}
+            onClick={() => claimBalanceHandler(currentAccount)}
             background="#fff"
             borderColor="#00e"
             color="blue"
@@ -40,6 +45,19 @@ const GameActions: React.FC = () => {
           >
             Claim Balance
           </Button>
+
+          {isOwner && (
+            <Button
+              type="button"
+              onClick={() => claimOwnerBalanceHandler(currentAccount)}
+              background="#fff"
+              borderColor="#00e"
+              color="blue"
+              style={{ marginLeft: 40 }}
+            >
+              Claim All Balance
+            </Button>
+          )}
 
           <Button
             type="button"

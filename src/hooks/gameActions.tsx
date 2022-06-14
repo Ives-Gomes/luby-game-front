@@ -12,6 +12,7 @@ import {
   correctAnswer,
   incorrectAnswer,
   claimBalance,
+  withdrawBalance,
 } from '@helpers/index';
 
 interface GameActionsContextProps {
@@ -21,7 +22,8 @@ interface GameActionsContextProps {
   startGameHandler: (currentAccount: string) => void;
   correctAnswerHandler: (currentAccount: string) => void;
   incorrectAnswerHandler: (currentAccount: string) => void;
-  claimBalanceHandler: (currentAccount: string, amount: string) => void;
+  claimBalanceHandler: (currentAccount: string) => void;
+  claimOwnerBalanceHandler: (currentAccount: string) => void;
 }
 
 const GameActionsContext = createContext<GameActionsContextProps>({} as GameActionsContextProps);
@@ -60,11 +62,19 @@ const GameActionsProvider: React.FC = ({ children }: any) => {
     }
   }, [correctAnswer]);
 
-  const claimBalanceHandler = useCallback(async (currentAccount: string, amount: string) => {
-    await claimBalance(currentAccount, amount) as any;
+  const claimBalanceHandler = useCallback(async (currentAccount: string) => {
+    await claimBalance(currentAccount) as any;
 
     setGetBalance(!getBalance);
-  }, [correctAnswer]);
+  }, [claimBalance]);
+
+  const claimOwnerBalanceHandler = useCallback(async (
+    currentAccount: string,
+  ) => {
+    await withdrawBalance(currentAccount) as any;
+
+    setGetBalance(!getBalance);
+  }, [withdrawBalance]);
 
   return (
     <GameActionsContext.Provider
@@ -77,6 +87,7 @@ const GameActionsProvider: React.FC = ({ children }: any) => {
         correctAnswerHandler,
         incorrectAnswerHandler,
         claimBalanceHandler,
+        claimOwnerBalanceHandler,
       }}
     >
       {children}

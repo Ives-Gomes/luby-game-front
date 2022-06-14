@@ -18,18 +18,19 @@ const Header: React.FC = () => {
     currentAccount,
     getPlayerBalanceHandler,
     playerBalance,
-    getIsOwner,
+    gameBalance,
+    getBalanceHandler,
     isOwner,
+    contractBalance,
+    getContractBalanceHandler,
   } = useGameInfos();
-
-  useEffect(() => {
-    getIsOwner(currentAccount);
-  }, [currentAccount]);
 
   const { startedGame, getBalance } = useGameActions();
 
   useEffect(() => {
     getPlayerBalanceHandler(currentAccount);
+    getBalanceHandler(currentAccount);
+    getContractBalanceHandler(currentAccount);
   }, [startedGame, currentAccount, getBalance]);
 
   return (
@@ -54,13 +55,21 @@ const Header: React.FC = () => {
 
       <Content>
         {currentAccount.length !== 0 && (
-          <PlayerBalance>
-            <p>{`Your balance: ${playerBalance}`}</p>
-          </PlayerBalance>
-        )}
+          <>
+            <PlayerBalance>
+              <p>{`Game balance: ${playerBalance}`}</p>
+            </PlayerBalance>
 
-        {isOwner && (
-          <p>IS OWNER</p>
+            <PlayerBalance style={{ marginLeft: 20 }}>
+              <p>{`Wallet balance: ${gameBalance}`}</p>
+            </PlayerBalance>
+
+            {isOwner && (
+              <PlayerBalance style={{ marginLeft: 20 }}>
+                <p>{`Contract balance: ${contractBalance}`}</p>
+              </PlayerBalance>
+            )}
+          </>
         )}
       </Content>
     </Container>
